@@ -3,15 +3,27 @@ This is not the only way to complete this assignment.
 Feel free to disregard and create your own code */
 
 // Define a function that will create metadata for given sample
-function buildMetadata(sample) {
+function buildMetadata(id) {
 
     // Read the json data
-
+    d3.json("samples.json").then(function(data) {
+        var metadata = data.metadata;
+        console.log(metadata)
+    
         // Parse and filter the data to get the sample's metadata
-
+        //i.e., an individual's demographic information - use id 
+        var filteredMetadata = metadata.filter(meta => meta.id == id[0]);
+        
         // Specify the location of the metadata and update it
-
-}
+        var demographicInfo = d3.select("#sample-metadata");
+        demographicInfo.html("");
+        Object.entries(filteredMetadata).forEach(([key,value])=> {
+            demographicInfo.append("h5").text('${key}${value}');
+        
+        });
+    });
+    
+};
 
 // Define a function that will create charts for given sample
 function buildCharts(sample) {
